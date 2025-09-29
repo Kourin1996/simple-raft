@@ -1,0 +1,78 @@
+[workspace]
+members = [
+    "crates/core",
+    "crates/adapters",
+    "bin/*",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+authors = ["kourin <kourin.code@gmail.com>"]
+repository = "https://github.com/Kourin1996/simple-raft"
+homepage = "https://github.com/Kourin1996/simple-raft"
+
+[workspace.dependencies]
+# Internal crates
+raft-core = { path = "crates/core" }
+raft-adapters = { path = "crates/adapters" }
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+[profile.test]
+opt-level = 0
+debug = true
+
+[profile.bench]
+inherits = "release"
+
+# Linter and formatter configuration
+[workspace.lints.rust]
+unsafe_code = "forbid"
+rust_2021_compatibility = "warn"
+rust_2024_compatibility = "warn"
+missing_docs = "warn"
+unused_imports = "warn"
+unused_mut = "warn"
+dead_code = "warn"
+unreachable_pub = "warn"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+
+missing_errors_doc = "warn"
+missing_panics_doc = "warn"
+missing_safety_doc = "deny"
+
+perf = "warn"
+expect_used = "warn"
+unwrap_used = "warn"
+panic = "warn"
+todo = "warn"
+unimplemented = "warn"
+
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+return_self_not_must_use = "allow"
+similar_names = "allow"
+too_many_lines = "allow"
+cast_possible_truncation = "allow"
+cast_possible_wrap = "allow"
+cast_precision_loss = "allow"
+cast_sign_loss = "allow"
+
+[workspace.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
